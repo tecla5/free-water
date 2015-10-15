@@ -3,13 +3,18 @@
 
 <dom-module id="free-water-map">
 
+  <script src="./free-water-map.js"></script>
+
   <template>
-    <google-map></google-map>
+    <google-map>
+      <google-map-marker class='currentPos'></google-map-marker>    
+    </google-map>
   </template>
 
   <script>
     Polymer({
-      is: "free-water-map"
+      is: "free-water-map",
+      behaviors: [FreeWaterMapBehavior]
     });
   </script>
 
