@@ -1,4 +1,11 @@
 node_modules
+
+app
+
 www/*
-platforms
-plugins
+hook/*
+platforms/*
+plugins/*
+
+
+!hooks/before_prepare/wsk_build_copy_script.sh
