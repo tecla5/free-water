@@ -39,7 +39,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Update DOM on a Received Event
   app.receivedEvent= function(id) {
       console.log('Received Event: ' + id);
-      window.location = '/';
   };
 
   // See https://github.com/Polymer/polymer/issues/1381

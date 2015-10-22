@@ -175,6 +175,9 @@ gulp.task('vulcanize', function () {
 
   return gulp.src('dist/index.html')
     .pipe(polybuild())//{maximumCrush: true}
+    .pipe($.replace(/<mycordova><\/mycordova>/, function() {
+          return '<script src="cordova.js"></script>';
+      }))
     .pipe(gulp.dest('dist/'));
 });
 
