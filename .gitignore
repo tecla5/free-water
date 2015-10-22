@@ -1,3 +1,11 @@
 node_modules
-www/bower_components
-platforms
+
+app
+
+www/*
+hook/*
+platforms/*
+plugins/*
+
+
+!hooks/before_prepare/wsk_build_copy_script.sh
