@@ -1,0 +1,29 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="free-water-map">
+
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: block;
+      }
+
+      google-map {
+        position: inherit;
+        display: block;
+        height: 100%;
+      }
+      
+    </style>
+
+
+    <google-map>
+      <google-map-marker class='currentPos'></google-map-marker>
+    </google-map>
+  </template>
+
+  <script src="free-water-map.js"></script>
+
+</dom-module>
