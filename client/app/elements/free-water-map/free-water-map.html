@@ -15,12 +15,28 @@
         display: block;
         height: 100%;
       }
-      
     </style>
 
 
+    <firebase-collection
+      location="https://blinding-fire-1061.firebaseIO.com/marks"
+      data="{{marks}}"></firebase-collection>
+
+
     <google-map>
-      <google-map-marker class='currentPos'></google-map-marker>
+      <google-map-marker class='currentPos'>
+        <paper-input label="Source water name"></paper-input>
+
+        <paper-icon-button icon="image:camera"></paper-icon-button>
+        <paper-icon-button icon="save"></paper-icon-button>
+      </google-map-marker>
+
+      <template is="dom-repeat" items="[[marks]]" as="marker">
+        <google-map-marker latitude="[[marker.lat]]" longitude="[[marker.lng]]"
+            icon="../../images/water_icon.png">
+          <label>[[marker.name]]</label>
+        </google-map-marker>
+      </template>
     </google-map>
   </template>
 

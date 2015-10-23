@@ -1,4 +1,5 @@
-var FreeWaterMapBehavior = {
+Polymer({
+  is: 'free-water-map',  
   created : function() {
 
       if (navigator.geolocation) {
@@ -6,6 +7,10 @@ var FreeWaterMapBehavior = {
       } else {
           throw  'Geolocation is not supported.';
       }
+  },
+  ready: function(){
+    this.fire('map-ready');
+    console.log('map-ready');
   },
   initMap: function(location) {
     this.pos = {
@@ -22,9 +27,4 @@ var FreeWaterMapBehavior = {
     this.currentPosMarker.latitude = this.pos.lat;
     this.currentPosMarker.longitude = this.pos.lng;
   }
-};
-
-Polymer({
-  is: 'free-water-map',
-  behaviors: [FreeWaterMapBehavior]
 });
