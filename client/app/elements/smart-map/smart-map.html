@@ -21,7 +21,6 @@
     <google-map>
 
       <google-map-marker class='currentPos'>
-        <label class$="{{typeMessage}}">{{message}}}</label>
         <paper-input label="Source water name" id="mark_name"></paper-input>
 
         <paper-icon-button icon="image:camera"></paper-icon-button>
@@ -31,11 +30,17 @@
 
       <template is="dom-repeat" items="[[marks]]" as="marker">
         <google-map-marker latitude="[[marker.lat]]" longitude="[[marker.lng]]"
-            icon="../../images/water_icon.png">
-          <label>[[marker.name]]</label>
+          icon="../../images/water_icon.png">
+            <div>Name: <span>[[marker.name]]</span></div>
 
-          <!--<paper-button id="confirmButton-{{marker$index}}">Confim</paper-button>
-          <paper-button  id="denyButton-{{marker$index}}">Denunciar</paper-button>-->
+          <input type='hidden' value='{{index}}'></input>
+
+          <paper-icon-button icon="icons:thumb-up" alt="confirm">
+          </paper-icon-button>
+          <label class="confirmLabel">[[marker.confirm]]</label>
+
+          <paper-icon-button icon="icons:thumb-down"  alt="complaint"></paper-icon-button >
+          <label class="complaintLabel">[[marker.complaint]]</label>
         </google-map-marker>
       </template>
     </google-map>

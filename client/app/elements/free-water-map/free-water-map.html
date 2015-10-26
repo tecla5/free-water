@@ -29,15 +29,17 @@
         });
 
         this.$$('smart-map').addEventListener('confirm', function (data) {
-          /*var mark = data.detail;
-          var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/' + mark.name);
-          marksdataSource.update({confirm: mark.confirm + 1});*/
+          var mark = data.detail.mark;
+
+          var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks/' + mark.__firebaseKey__);
+          marksdataSource.update({confirm: mark.confirm + 1});
         });
 
         this.$$('smart-map').addEventListener('complaint', function (data) {
-          /*var mark = data.detail;
-          var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/' + mark.name);
-          marksdataSource.update({confirm: mark.deny + 1});*/
+          var mark = data.detail.mark;
+
+          var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks/' + mark.__firebaseKey__);
+          marksdataSource.update({complaint: mark.complaint + 1});
         });
       }
     });
