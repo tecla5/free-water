@@ -1,0 +1,47 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="smart-map">
+
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: block;
+      }
+
+      google-map {
+        position: inherit;
+        display: block;
+        height: 100%;
+      }
+    </style>
+
+
+    <google-map>
+
+      <google-map-marker class='currentPos'>
+        <label class$="{{typeMessage}}">{{message}}}</label>
+        <paper-input label="Source water name" id="mark_name"></paper-input>
+
+        <paper-icon-button icon="image:camera"></paper-icon-button>
+        <paper-icon-button  id="publishButton" icon="editor:publish" alt="Publish">
+        </paper-icon-button>
+      </google-map-marker>
+
+      <template is="dom-repeat" items="[[marks]]" as="marker">
+        <google-map-marker latitude="[[marker.lat]]" longitude="[[marker.lng]]"
+            icon="../../images/water_icon.png">
+          <label>[[marker.name]]</label>
+
+          <!--<paper-button id="confirmButton-{{marker$index}}">Confim</paper-button>
+          <paper-button  id="denyButton-{{marker$index}}">Denunciar</paper-button>-->
+        </google-map-marker>
+      </template>
+    </google-map>
+
+  </template>
+
+  <script src="smart-map.js"></script>
+
+</dom-module>
