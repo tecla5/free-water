@@ -17,8 +17,11 @@
       }
     </style>
 
-
-    <google-map>
+    <google-map map="{{map}}">
+      <paper-icon-button icon="maps:local-drink"
+            alt="search closer"
+            style="float:right">
+      </paper-icon-button >
 
       <google-map-marker class='currentPos'>
         <paper-input label="Source water name" id="mark_name"></paper-input>
@@ -29,24 +32,41 @@
       </google-map-marker>
 
       <template is="dom-repeat" items="[[marks]]" as="marker">
-        <google-map-marker latitude="[[marker.lat]]" longitude="[[marker.lng]]"
-          icon="../../images/water_icon.png">
+        <google-map-marker latitude="[[marker.lat]]"
+                  longitude="[[marker.lng]]"
+                  icon="../../images/water_icon.png"
+                  id="[[marker.__firebaseKey__]]">
+
             <div>Name: <span>[[marker.name]]</span></div>
+            <div>Distance: <span class='distance'>[[marker.distance]]</span></div>
 
-          <input type='hidden' value='{{index}}'></input>
+            <input type='hidden' value='{{index}}'></input>
 
-          <paper-icon-button icon="icons:thumb-up" alt="confirm">
-          </paper-icon-button>
-          <label class="confirmLabel">[[marker.confirm]]</label>
+            <paper-icon-button icon="icons:thumb-up" alt="confirm">
+            </paper-icon-button>
+            <label class="confirmLabel">[[marker.confirm]]</label>
 
-          <paper-icon-button icon="icons:thumb-down"  alt="complaint"></paper-icon-button >
-          <label class="complaintLabel">[[marker.complaint]]</label>
+            <paper-icon-button icon="icons:thumb-down"  alt="complaint"></paper-icon-button >
+            <label class="complaintLabel">[[marker.complaint]]</label>
+
+            <paper-icon-button icon="maps:directions-run"  alt="directions"></paper-icon-button >
+
         </google-map-marker>
       </template>
+
     </google-map>
+
+    <!--<template is="dom-repeat" items="[[directions]]" as="direction">-->
+      <google-map-directions map="{{map}}"
+                start-address="[[direction.start]]"
+                end-address="[[direction.end]]"
+                travel-mode="WALKING">
+      </google-map-directions>
+      <!--</template>-->
 
   </template>
 
   <script src="smart-map.js"></script>
+
 
 </dom-module>
