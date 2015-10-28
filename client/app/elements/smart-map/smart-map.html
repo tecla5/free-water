@@ -18,13 +18,14 @@
     </style>
 
     <google-map map="{{map}}">
-      <template is="dom-if" if="{{this.closer}}">
+      <template is="dom-if" if="{{closer}}">
         <paper-icon-button icon="maps:local-drink"
               alt="search closer"
               style="float:right">
         </paper-icon-button >
       </template>
 
+      <!-- current pos -->
       <google-map-marker class='currentPos'>
         <template is="dom-if" if="{{!veryCloser}}">
           <paper-input label="Source water name" id="mark_name"></paper-input>
@@ -39,6 +40,7 @@
         </template>
       </google-map-marker>
 
+      <!-- Marks -->
       <template is="dom-repeat" items="[[marks]]" as="marker">
         <google-map-marker latitude="[[marker.lat]]"
                   longitude="[[marker.lng]]"
@@ -64,14 +66,12 @@
 
     </google-map>
 
-    <!--<template is="dom-repeat" items="[[directions]]" as="direction">-->
-      <google-map-directions map="{{map}}"
-                start-address="[[direction.start]]"
-                end-address="[[direction.end]]"
-                travel-mode="WALKING">
-      </google-map-directions>
-      <!--</template>-->
-
+    <!-- Route -->
+    <google-map-directions map="{{map}}"
+              start-address="[[direction.start]]"
+              end-address="[[direction.end]]"
+              travel-mode="WALKING">
+    </google-map-directions>
   </template>
 
   <script src="smart-map.js"></script>

@@ -37,18 +37,20 @@ Polymer({
 
     if (this.marks && this.marks.length > 0 && this.pos){
       var that = this;
+      this.sorted = [];
 
       for (var i = 0; i < this.marks.length; i++){
         var mark = this.marks[i];
         mark.distance = getDistance(this.pos, mark);
         var distanceElement = that.$$('#' + mark.__firebaseKey__ + ' .distance');
         distanceElement.textContent = mark.distance + ' KM';
+        this.sorted.push(mark);
       }
 
-      this.closer = this.marks[0].distance < 20;
-      this.veryCloser = this.marks[0].distance < 1;
+      this.sorted.sort((a, b) => a.distance - b.distance);
 
-      var sorted = this.marks.sort((a, b) => a.distance - b.distance);
+      this.closer = this.sorted[0].distance < 20;
+      this.veryCloser = this.sorted[0].distance < 0.5;
     }
   },
   loadCurrentPos: function(){
@@ -99,7 +101,9 @@ Polymer({
     }else if(e.target.alt === 'directions'){
       this.markDirectionTo(this.marks[ this.getIndex(e.target) ]);
     }else if (e.target.alt === 'search closer'){
-      this.markDirectionTo(this.marks[ 0 ]);
+      this.markDirectionTo(this.sorted[ 0 ]);
+    }else{
+      this.direction = undefined;
     }
   },
   markDirectionTo: function(mark){
