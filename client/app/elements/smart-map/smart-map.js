@@ -39,11 +39,11 @@ Polymer({
       var that = this;
       this.marks.forEach((mark) => {
         mark.distance = getDistance(this.pos, mark);
-
+        mark.closer = mark.distance < 20;
         var distanceElement = that.$$('#' + mark.__firebaseKey__ + ' .distance');
         distanceElement.textContent = mark.distance + ' KM';
       });
-  
+
       var sorted = this.marks.sort((a, b) => a.distance - b.distance);
     }
   },

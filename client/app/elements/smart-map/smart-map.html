@@ -20,7 +20,8 @@
     <google-map map="{{map}}">
       <paper-icon-button icon="maps:local-drink"
             alt="search closer"
-            style="float:right">
+            style="float:right"
+            hidden$="{{marks[0].closer}}">
       </paper-icon-button >
 
       <google-map-marker class='currentPos'>
