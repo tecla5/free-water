@@ -18,18 +18,25 @@
     </style>
 
     <google-map map="{{map}}">
-      <paper-icon-button icon="maps:local-drink"
-            alt="search closer"
-            style="float:right"
-            hidden$="{{marks[0].closer}}">
-      </paper-icon-button >
+      <template is="dom-if" if="{{this.closer}}">
+        <paper-icon-button icon="maps:local-drink"
+              alt="search closer"
+              style="float:right">
+        </paper-icon-button >
+      </template>
 
       <google-map-marker class='currentPos'>
-        <paper-input label="Source water name" id="mark_name"></paper-input>
+        <template is="dom-if" if="{{!veryCloser}}">
+          <paper-input label="Source water name" id="mark_name"></paper-input>
 
-        <paper-icon-button icon="image:camera"></paper-icon-button>
-        <paper-icon-button  id="publishButton" icon="editor:publish" alt="Publish">
-        </paper-icon-button>
+          <paper-icon-button icon="image:camera"></paper-icon-button>
+          <paper-icon-button  id="publishButton" icon="editor:publish" alt="Publish">
+          </paper-icon-button>
+        </template>
+
+        <template is="dom-if" if="{{veryCloser}}">
+            This point is already marked
+        </template>
       </google-map-marker>
 
       <template is="dom-repeat" items="[[marks]]" as="marker">

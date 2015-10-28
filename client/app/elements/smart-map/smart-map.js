@@ -35,14 +35,18 @@ Polymer({
   },
   changeMark: function(marks, pos){
 
-    if (this.marks && this.pos){
+    if (this.marks && this.marks.length > 0 && this.pos){
       var that = this;
-      this.marks.forEach((mark) => {
+
+      for (var i = 0; i < this.marks.length; i++){
+        var mark = this.marks[i];
         mark.distance = getDistance(this.pos, mark);
-        mark.closer = mark.distance < 20;
         var distanceElement = that.$$('#' + mark.__firebaseKey__ + ' .distance');
         distanceElement.textContent = mark.distance + ' KM';
-      });
+      }
+
+      this.closer = this.marks[0].distance < 20;
+      this.veryCloser = this.marks[0].distance < 1;
 
       var sorted = this.marks.sort((a, b) => a.distance - b.distance);
     }
@@ -73,7 +77,7 @@ Polymer({
   initMap: function(location) {
 
     this.googleMap = document.querySelector('google-map');
-    this.googleMap.zoom = 18;
+    this.googleMap.zoom = 15;
     this.googleMap.latitude = this.pos.lat;
     this.googleMap.longitude = this.pos.lng;
     this.loadCurrentPos();
