@@ -67,7 +67,7 @@ Polymer({
       lat: location.coords.latitude,
       lng: location.coords.longitude
     };
-    console.log('pos', this.pos);
+
     if (!this.googleMap){
       this.initMap(location);
     }
@@ -79,12 +79,14 @@ Polymer({
   initMap: function(location) {
 
     this.googleMap = document.querySelector('google-map');
-    this.googleMap.zoom = 15;
+    this.googleMap.zoom = 17;
     this.googleMap.latitude = this.pos.lat;
     this.googleMap.longitude = this.pos.lng;
     this.loadCurrentPos();
   },
   tap: function(e){
+    console.log('e.target.alt', e.target.alt);
+
     if (e.target.alt === 'Publish'){
       this.name = this.querySelector('#mark_name').value;
       this.fire('publish', {lat: this.pos.lat,
@@ -103,6 +105,7 @@ Polymer({
     }else if (e.target.alt === 'search closer'){
       this.markDirectionTo(this.sorted[ 0 ]);
     }else{
+      this.$$('google-map-directions').map = null;
       this.direction = undefined;
     }
   },
