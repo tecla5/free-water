@@ -1,21 +1,3 @@
-function getDistance(pos1, pos2){
-    var R = 6372.795477598;
-    var C = Math.PI/180
-    var lata = pos1.lat;
-    var lona = pos1.lng;;
-
-    var latb = pos2.lat;
-    var lonb = pos2.lng;
-
-    var distance = 2 * R * Math.asin(
-      Math.sqrt( Math.pow ( Math.sin(C * ( lata - latb ) / 2), 2)
-        + Math.cos( C * lata ) * Math.cos(C * latb)
-        * Math.pow (Math.sin(C * ( lonb - lona) / 2 ), 2))
-    );
-
-    return Math.floor(distance * 100) / 100;
-}
-
 Polymer({
   is: 'smart-map',
   listeners: {
@@ -44,6 +26,9 @@ Polymer({
         mark.distance = getDistance(this.pos, mark);
         var distanceElement = that.$$('#' + mark.__firebaseKey__ + ' .distance');
         distanceElement.textContent = mark.distance + ' KM';
+        that.$$('#' + mark.__firebaseKey__).icon = getReliability(mark);
+
+        console.log("mark.reliability", mark.reliability);
         this.sorted.push(mark);
       }
 
@@ -126,3 +111,33 @@ Polymer({
     return hiddenElement.value;
   }
 });
+
+function getDistance(pos1, pos2){
+    var R = 6372.795477598;
+    var C = Math.PI/180
+    var lata = pos1.lat;
+    var lona = pos1.lng;;
+
+    var latb = pos2.lat;
+    var lonb = pos2.lng;
+
+    var distance = 2 * R * Math.asin(
+      Math.sqrt( Math.pow ( Math.sin(C * ( lata - latb ) / 2), 2) +
+        Math.cos( C * lata ) * Math.cos(C * latb) *
+        Math.pow (Math.sin(C * ( lonb - lona) / 2 ), 2))
+    );
+
+    return Math.floor(distance * 100) / 100;
+}
+
+function getReliability(mark){
+  console.log('mark', mark);
+  if ((mark.confirm + mark.complaint) == 0) return "../../images/new_water_icon.png";
+
+  var reliability =  (mark.confirm * 100)/ (mark.confirm + mark.complaint);
+
+  if (reliability >= 75) return "../../images/water_icon_100.png";
+  else if (reliability < 75 && reliability >= 50) return "../../images/water_icon_75.png";
+  else if (reliability < 50 && reliability >= 30) return "../../images/water_icon_50.png";
+  else return "../../images/water_icon_20.png";
+}

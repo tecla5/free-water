@@ -44,7 +44,6 @@
       <template is="dom-repeat" items="[[marks]]" as="marker">
         <google-map-marker latitude="[[marker.lat]]"
                   longitude="[[marker.lng]]"
-                  icon="../../images/water_icon.png"
                   id="[[marker.__firebaseKey__]]">
 
             <div>Name: <span>[[marker.name]]</span></div>
