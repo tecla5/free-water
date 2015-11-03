@@ -36,30 +36,36 @@ Polymer({
   properties:{
     marks: Array,
     pos: Object,
-    direction: Object
+    direction: Object,
+    searchResults: Array
   },
   observers: [
-    'changeMark(marks, pos)'
+    'changeMark(marks, pos)',
+    'currentPosChanged(searchResults)'
   ],
   ready: function(){
     this.fire('map-ready');
     this.loadCurrentPos();
   },
+  currentPosChanged: function(searchResults){
+    console.log('searchResults', JSON.stringify(searchResults));
+
+    if (searchResults.length > 0){
+      this.pos.name = searchResults[0].name;
+      this.pos.formattedAddress = searchResults[0].formatted_address;
+    }
+  },
   changeMark: function(marks, pos){
-    console.log('CHANGE', marks, pos);
     this.marks = marks;
     this.pos =pos;
+
     if (this.marks && this.marks.length > 0 && this.pos){
-      //var that = this;
       this.sorted = [];
 
       for (var i = 0; i < this.marks.length; i++){
         var mark = this.marks[i];
         mark.distance = getDistance(this.pos, mark);
         mark.icon = getReliability(mark);
-        /*var distanceElement = that.$$('#' + mark.__firebaseKey__ + ' .distance');
-        distanceElement.textContent = mark.distance + ' KM';
-        that.$$('#' + mark.__firebaseKey__).icon = getReliability(mark);*/
 
         this.sorted.push(mark);
       }
@@ -92,6 +98,10 @@ Polymer({
     this.currentPosMarker = document.querySelector('google-map .currentPos');
     this.currentPosMarker.latitude = this.pos.lat;
     this.currentPosMarker.longitude = this.pos.lng;
+
+    var googleSearch = this.$$('google-map-search');
+    googleSearch.query = this.pos.lat + ',' + this.pos.lng;
+    googleSearch.search();
   },
   initMap: function(location) {
     console.log(location);
@@ -105,10 +115,11 @@ Polymer({
     console.log('e.target.alt', e.target.alt);
 
     if (e.target.alt === 'Publish'){
-      this.name = this.querySelector('#mark_name').value;
+
       this.fire('publish', {lat: this.pos.lat,
         lng: this.pos.lng,
-        name: this.name,
+        name: this.pos.name,
+        formattedAddress: this.pos.formattedAddress,
         confim: 0,
         complaint: 0});
     }else if (e.target.alt === 'confirm'){
@@ -127,8 +138,8 @@ Polymer({
     }
   },
   markDirectionTo: function(mark){
-    var start = this.pos.lat+', '+this.pos.lng;//`${this.pos.lat}, ${this.pos.lng}`;
-    var end = mark.lat+', '+mark.lng;//`${mark.lat}, ${mark.lng}`;
+    var start = this.pos.lat + ', '+ this.pos.lng;//`${this.pos.lat}, ${this.pos.lng}`;
+    var end = mark.lat + ', '+ mark.lng;//`${mark.lat}, ${mark.lng}`;
 
     this.direction = {start: start, end: end};
   },
