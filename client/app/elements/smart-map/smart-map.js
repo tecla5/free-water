@@ -56,9 +56,6 @@ Polymer({
         var mark = this.marks[i];
         mark.distance = getDistance(this.pos, mark);
         mark.icon = getReliability(mark);
-        /*var distanceElement = that.$$('#' + mark.__firebaseKey__ + ' .distance');
-        distanceElement.textContent = mark.distance + ' KM';
-        that.$$('#' + mark.__firebaseKey__).icon = getReliability(mark);*/
 
         this.sorted.push(mark);
       }
@@ -126,8 +123,8 @@ Polymer({
     }
   },
   markDirectionTo: function(mark){
-    var start = this.pos.lat+', '+this.pos.lng;//`${this.pos.lat}, ${this.pos.lng}`;
-    var end = mark.lat+', '+mark.lng;//`${mark.lat}, ${mark.lng}`;
+    var start = this.pos.lat + ', '+ this.pos.lng;//`${this.pos.lat}, ${this.pos.lng}`;
+    var end = mark.lat + ', '+ mark.lng;//`${mark.lat}, ${mark.lng}`;
 
     this.direction = {start: start, end: end};
   },
