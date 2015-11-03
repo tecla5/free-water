@@ -17,7 +17,6 @@ function getDistance(pos1, pos2){
 }
 
 function getReliability(mark){
-  console.log('mark', mark);
   if ((mark.confirm + mark.complaint) === 0) {return '../../images/new_water_icon.png';}
 
   var reliability =  (mark.confirm * 100)/ (mark.confirm + mark.complaint);
@@ -46,9 +45,8 @@ Polymer({
     this.fire('map-ready');
     this.loadCurrentPos();
   },
-
-
   changeMark: function(marks, pos){
+    console.log('CHANGE', marks, pos);
     this.marks = marks;
     this.pos =pos;
     if (this.marks && this.marks.length > 0 && this.pos){
@@ -58,11 +56,11 @@ Polymer({
       for (var i = 0; i < this.marks.length; i++){
         var mark = this.marks[i];
         mark.distance = getDistance(this.pos, mark);
-        var distanceElement = that.$$('#' + mark.__firebaseKey__ + ' .distance');
+        mark.icon = getReliability(mark);
+        /*var distanceElement = that.$$('#' + mark.__firebaseKey__ + ' .distance');
         distanceElement.textContent = mark.distance + ' KM';
-        that.$$('#' + mark.__firebaseKey__).icon = getReliability(mark);
+        that.$$('#' + mark.__firebaseKey__).icon = getReliability(mark);*/
 
-        console.log('mark.reliability', mark.reliability);
         this.sorted.push(mark);
       }
 

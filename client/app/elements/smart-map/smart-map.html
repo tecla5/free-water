@@ -44,7 +44,8 @@
       <template is="dom-repeat" items="[[marks]]" as="marker">
         <google-map-marker latitude="[[marker.lat]]"
                   longitude="[[marker.lng]]"
-                  id="[[marker.__firebaseKey__]]">
+                  id="[[marker.__firebaseKey__]]"
+                  icon=[[marker.icon]]>
 
             <div>Name: <span>[[marker.name]]</span></div>
             <div>Distance: <span class='distance'>[[marker.distance]]</span></div>

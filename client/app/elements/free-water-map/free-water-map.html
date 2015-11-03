@@ -3,17 +3,21 @@
 
 <dom-module id="free-water-map">
 
+  <link rel="import" href="../../bower_components/firebase-element/firebase.html">
+  <link rel="import" href="../../bower_components/firebase-element/firebase-collection.html">
+
   <template>
     <style include="shared-styles"></style>
 
     <!-- firebase -->
-    <script src="../../../bower_components/firebase/firebase.js"></script>
+    <!--<script src="../../../bower_components/firebase/firebase.js"></script>-->
 
-    <firebase-collection
+    <!--<firebase-collection
       location="https://blinding-fire-1061.firebaseIO.com/marks"
-      data="{{marks}}"></firebase-collection>
+      data="{{marks}}"></firebase-collection>-->
 
-     <smart-map marks="[[marks]]"></smart-map>
+    <smart-map marks="[[marks]]"></smart-map>
+
   </template>
 
   <script>
@@ -22,6 +26,8 @@
       ready: function(){
         var smartMap = this.$$('smart-map');
         var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks');
+
+        this.loadMarks(smartMap, marksdataSource);
 
         this.$$('smart-map').addEventListener('publish', function (data) {
             marksdataSource.push(data.detail);
@@ -40,6 +46,20 @@
 
           var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks/' + mark.__firebaseKey__);
           marksdataSource.update({complaint: mark.complaint + 1});
+        });
+      },
+      loadMarks: function(smartMap, marksdataSource){
+        marksdataSource.on("value", function(snapshot) {
+          var marks = [];
+          var obj = snapshot.val();
+          
+          for(var propt in obj){
+              marks.push(obj[propt]);
+          }
+
+          smartMap.marks = marks;
+        }, function (errorObject) {
+          console.log("The read failed: " + errorObject.code);
         });
       }
     });
