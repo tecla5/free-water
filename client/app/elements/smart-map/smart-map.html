@@ -14,6 +14,9 @@
       }
     </style>
 
+    <google-map-search map="[[map]]" results="{{searchResults}}" type="address">
+    </google-map-search>
+
     <google-map map="{{map}}">
       <template is="dom-if" if="{{closer}}">
         <paper-icon-button icon="maps:local-drink"
@@ -22,10 +25,13 @@
         </paper-icon-button >
       </template>
 
-      <!-- current pos -->
       <google-map-marker class='currentPos'>
         <template is="dom-if" if="{{!veryCloser}}">
-          <paper-input label="Source water name" id="mark_name"></paper-input>
+          <div class="info">
+            <h2 id="currentPosName">{{pos.name}}</h2>
+            <span id="currentPosAddress">[[pos.formattedAddress]]</span>
+          </div>
+          <!--<paper-input label="Source water name" id="mark_name"></paper-input>-->
 
           <paper-icon-button icon="image:camera"></paper-icon-button>
           <paper-icon-button  id="publishButton" icon="editor:publish" alt="Publish">
@@ -37,33 +43,35 @@
         </template>
       </google-map-marker>
 
-      <!-- Marks -->
       <template is="dom-repeat" items="[[marks]]" as="marker">
         <google-map-marker latitude="[[marker.lat]]"
                   longitude="[[marker.lng]]"
                   id="[[marker.__firebaseKey__]]"
                   icon=[[marker.icon]]>
 
-            <div>Name: <span>[[marker.name]]</span></div>
-            <div>Distance: <span class='distance'>[[marker.distance]]</span></div>
+          <div class="info">
+            <h2>[[marker.name]]</h2>
+            <span>[[marker.formattedAddress]]</span>
+          </div>
 
-            <input type='hidden' value='{{index}}'></input>
+          <div>Distance: <span class='distance'>[[marker.distance]]</span></div>
 
-            <paper-icon-button icon="icons:thumb-up" alt="confirm">
-            </paper-icon-button>
-            <label class="confirmLabel">[[marker.confirm]]</label>
+          <input type='hidden' value='{{index}}'></input>
 
-            <paper-icon-button icon="icons:thumb-down"  alt="complaint"></paper-icon-button >
-            <label class="complaintLabel">[[marker.complaint]]</label>
+          <paper-icon-button icon="icons:thumb-up" alt="confirm">
+          </paper-icon-button>
+          <label class="confirmLabel">[[marker.confirm]]</label>
 
-            <paper-icon-button icon="maps:directions-run"  alt="directions"></paper-icon-button >
+          <paper-icon-button icon="icons:thumb-down"  alt="complaint"></paper-icon-button >
+          <label class="complaintLabel">[[marker.complaint]]</label>
+
+          <paper-icon-button icon="maps:directions-run"  alt="directions"></paper-icon-button >
 
         </google-map-marker>
       </template>
 
     </google-map>
 
-    <!-- Route -->
     <google-map-directions map="{{map}}"
               start-address="[[direction.start]]"
               end-address="[[direction.end]]"
