@@ -49,17 +49,17 @@
         });
       },
       loadMarks: function(smartMap, marksdataSource){
-        marksdataSource.on("value", function(snapshot) {
+        marksdataSource.on('value', function(snapshot) {
           var marks = [];
           var obj = snapshot.val();
-          
+
           for(var propt in obj){
               marks.push(obj[propt]);
           }
 
           smartMap.marks = marks;
         }, function (errorObject) {
-          console.log("The read failed: " + errorObject.code);
+          console.log('The read failed: ' + errorObject.code);
         });
       }
     });

@@ -50,7 +50,7 @@ Polymer({
     this.marks = marks;
     this.pos =pos;
     if (this.marks && this.marks.length > 0 && this.pos){
-      var that = this;
+      //var that = this;
       this.sorted = [];
 
       for (var i = 0; i < this.marks.length; i++){

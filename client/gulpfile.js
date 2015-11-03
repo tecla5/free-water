@@ -296,7 +296,7 @@ gulp.task('default', ['clean'], function (cb) {
     ['copy', 'styles'],
     'elements',
     ['jshint', 'images', 'fonts', 'html'],
-    'vulcanize','rename-index', 'remove-old-build-index', // 'cache-config',
+    'vulcanize', // 'rename-index', 'remove-old-build-index', // 'cache-config',
     cb);
 });
 
