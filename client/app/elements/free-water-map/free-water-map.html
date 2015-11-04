@@ -31,7 +31,6 @@
 
         this.$$('smart-map').addEventListener('confirm', function (data) {
           var mark = data.detail.mark;
-
           var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks/' + mark.__firebaseKey__);
           marksdataSource.update({confirm: mark.confirm + 1});
         });
@@ -45,10 +44,13 @@
       },
       loadMarks: function(smartMap, marksdataSource){
         marksdataSource.on('value', function(snapshot) {
+
           var marks = [];
           var obj = snapshot.val();
 
           for(var propt in obj){
+              var mark = obj[propt];
+              mark.__firebaseKey__ = propt;
               marks.push(obj[propt]);
           }
 
