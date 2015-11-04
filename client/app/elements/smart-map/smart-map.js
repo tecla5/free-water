@@ -46,12 +46,14 @@ Polymer({
   ready: function(){
     this.fire('map-ready');
     this.loadCurrentPos();
+
   },
   currentPosChanged: function(searchResults){
     console.log('searchResults', JSON.stringify(searchResults));
 
     if (searchResults.length > 0){
       this.pos.name = searchResults[0].name;
+      /*jshint camelcase: false */ /* option: add to .jshintrc file */
       this.pos.formattedAddress = searchResults[0].formatted_address;
     }
   },
