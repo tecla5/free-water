@@ -112,9 +112,8 @@ Polymer({
     this.loadCurrentPos();
   },
   tap: function(e){
-    console.log('e.target.alt', e.target.alt);
 
-    if (e.target.alt === 'Publish'){
+    if (e && e.target.alt === 'Publish'){
 
       this.fire('publish', {lat: this.pos.lat,
         lng: this.pos.lng,
@@ -133,17 +132,18 @@ Polymer({
     }else if (e.target.alt === 'search closer'){
       this.markDirectionTo(this.sorted[ 0 ]);
     }else{
-      this.$$('google-map-directions').map = null;
-      this.direction = undefined;
+      this.$$('google-map-directions').directionsRenderer.setMap(null);
     }
   },
   markDirectionTo: function(mark){
+    this.$$('google-map-directions').directionsRenderer.setMap(this.$$('google-map').map);
+
     console.log('markDirectionTo');
     var start = this.pos.lat + ', '+ this.pos.lng;
     var end = mark.lat + ', '+ mark.lng;
 
     this.direction = {start: start, end: end};
-    console.log('this.direction', this.direction);
+    console.log('this.direction', JSON.stringify(this.direction));
   },
   addOpinion: function(target){
     var parent = target.parentElement.parentElement;
