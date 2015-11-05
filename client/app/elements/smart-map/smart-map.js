@@ -44,6 +44,7 @@ Polymer({
     'currentPosChanged(searchResults)'
   ],
   ready: function(){
+    console.log('smart-map ready');
     this.fire('map-ready');
     this.loadCurrentPos();
 
