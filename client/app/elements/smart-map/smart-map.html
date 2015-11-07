@@ -1,19 +1,20 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="smart-map">
-  <style>
-    :host {
-      display: block;
-    }
-
-    google-map {
-      position: inherit;
-      display: block;
-      height: 100%;
-    }
-  </style>
 
   <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: block;
+      }
+
+      google-map {
+        position: inherit;
+        display: block;
+        height: 100%;
+      }
+    </style>
 
     <google-map-search map="[[map]]" results="{{searchResults}}" type="address">
     </google-map-search>
