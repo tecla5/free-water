@@ -44,6 +44,7 @@ Polymer({
     'currentPosChanged(searchResults)'
   ],
   ready: function(){
+    console.log('smart-map ready');
     this.fire('map-ready');
     this.loadCurrentPos();
   },
@@ -80,9 +81,13 @@ Polymer({
     if (navigator.geolocation) {
         setTimeout(this.loadCurrentPos.bind(this), 5000);
         return navigator.geolocation.getCurrentPosition(
-          this.updateCurrentPosMarker.bind(this));
+          this.updateCurrentPosMarker.bind(this),
+          function(error){console.log(error);},
+          {enableHighAccuracy:true}
+          );
     } else {
-        throw  'Geolocation is not supported.';
+      console.log('Geolocation is not supported.');
+      throw  'Geolocation is not supported.';
     }
   },
   updateCurrentPosMarker: function(location){

@@ -1,8 +1,21 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
 
 <dom-module id="free-water-map">
 
   <template>
     <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: block;
+      }
+
+      smart-map{
+        width: 100%;
+        height: 400px;
+      }
+
+    </style>
 
     <!-- firebase -->
     <!--<script src="../../../bower_components/firebase/firebase.js"></script>-->
@@ -19,6 +32,8 @@
     Polymer({
       is: 'free-water-map',
       ready: function(){
+        console.log('free-water-map');
+
         var smartMap = this.$$('smart-map');
         var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks');
 
