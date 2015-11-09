@@ -17,14 +17,14 @@ function getDistance(pos1, pos2){
 }
 
 function getReliability(mark){
-  if ((mark.confirm + mark.complaint) === 0) {return '../../images/new_water_icon.png';}
+  if ((mark.confirm + mark.complaint) === 0) {return 'images/new_water_icon.png';}
 
   var reliability =  (mark.confirm * 100)/ (mark.confirm + mark.complaint);
 
-  if (reliability >= 75) {return '../../images/water_icon_100.png';}
-  else if (reliability < 75 && reliability >= 50) {return '../../images/water_icon_75.png';}
-  else if (reliability < 50 && reliability >= 30) {return '../../images/water_icon_50.png';}
-  else {return '../../images/water_icon_20.png';}
+  if (reliability >= 75) {return 'images/water_icon_100.png';}
+  else if (reliability < 75 && reliability >= 50) {return 'images/water_icon_75.png';}
+  else if (reliability < 50 && reliability >= 30) {return 'images/water_icon_50.png';}
+  else {return 'images/water_icon_20.png';}
 }
 
 
@@ -67,6 +67,9 @@ Polymer({
 
         mark.distance = getDistance(this.pos, mark);
         mark.icon = getReliability(mark);
+        //{ 'url': getReliability(mark) };
+        //mark.icon = 'http://www.google.com/intl/en_us/mapfiles/ms/icons/blue-dot.png';
+        //mark.icon = 'blue';
 
         this.sorted.push(mark);
       }
