@@ -43,6 +43,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                              https://*.googleapis.com
                              https://*.firebaseio.com
   ">
+
+
+  <title>Free Water</title>
+  <!-- Place favicon.ico in the `app/` directory -->
+
+  <!-- Chrome for Android theme color -->
+  <meta name="theme-color" content="#2E3AA1">
+
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.json">
   <!--
   for chrome: manifest.json
 
@@ -67,15 +77,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   ],
   -->
 
-
-  <title>Free Water</title>
-  <!-- Place favicon.ico in the `app/` directory -->
-
-  <!-- Chrome for Android theme color -->
-  <meta name="theme-color" content="#2E3AA1">
-
-  <!-- Web Application Manifest -->
-  <link rel="manifest" href="manifest.json">
 
   <!-- Tile color for Win8 -->
   <meta name="msapplication-TileColor" content="#3372DF">
@@ -144,18 +145,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- Drawer Content -->
         <paper-menu class="list" attr-for-selected="data-route" selected="[[route]]">
           <a data-route="home" href="/" on-click="onDataRouteClick">
+            <!--
             <iron-icon icon="home"></iron-icon>
+            -->
+            <iron-icon src="images/water_icon_100.png"></iron-icon>
             <span>free water</span>
-          </a>
-
-          <a data-route="users" href="/users" on-click="onDataRouteClick">
-            <iron-icon icon="info"></iron-icon>
-            <span>google-map</span>
-          </a>
-
-          <a data-route="contact" href="/contact" on-click="onDataRouteClick">
-            <iron-icon icon="mail"></iron-icon>
-            <span>Contact</span>
           </a>
         </paper-menu>
       </paper-scroll-header-panel>
@@ -164,23 +158,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-scroll-header-panel main condenses keep-condensed-header>
 
         <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar" class="tall">
+        <paper-toolbar id="mainToolbar" >
           <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
           <span class="flex"></span>
 
           <!-- Toolbar icons -->
-          <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
+          <paper-icon-button icon="add" on-tap="opendialog()"></paper-icon-button>
 
           <!-- Application name -->
           <div class="middle middle-container center horizontal layout">
-            <div class="app-name">Polymer Starter Kit</div>
+            <div class="app-name">Free Water</div>
           </div>
 
-          <!-- Application sub title -->
-          <div class="bottom bottom-container center horizontal layout">
-            <div class="bottom-title paper-font-subhead">The future of the web today</div>
-          </div>
 
         </paper-toolbar>
 
@@ -194,29 +183,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
 
             </section>
-
-            <section data-route="users">
-              <paper-material elevation="1">
-                 <google-map latitude="37.77493" longitude="-122.41942"></google-map>
-              </paper-material>
-            </section>
-
-            <section data-route="user-info">
-              <paper-material elevation="1">
-                <h2 class="page-title">
-                User:<span>{{params.name}}</span>
-                </h2>
-                <div>This is <span>{{params.name}}</span>'s section</div>
-              </paper-material>
-            </section>
-
-            <section data-route="contact">
-              <paper-material elevation="1">
-                <h2 class="page-title">Contact</h2>
-                <p>This is the contact section</p>
-              </paper-material>
-            </section>
-
           </iron-pages>
         </div>
       </paper-scroll-header-panel>
@@ -243,8 +209,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
-
   <!-- endbuild-->
+
 </body>
 
 </html>
