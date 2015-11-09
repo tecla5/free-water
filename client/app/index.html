@@ -43,6 +43,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                              https://*.googleapis.com
                              https://*.firebaseio.com
   ">
+
+
+  <title>Free Water</title>
+  <!-- Place favicon.ico in the `app/` directory -->
+
+  <!-- Chrome for Android theme color -->
+  <meta name="theme-color" content="#2E3AA1">
+
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.json">
   <!--
   for chrome: manifest.json
 
@@ -67,15 +77,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   ],
   -->
 
-
-  <title>Free Water</title>
-  <!-- Place favicon.ico in the `app/` directory -->
-
-  <!-- Chrome for Android theme color -->
-  <meta name="theme-color" content="#2E3AA1">
-
-  <!-- Web Application Manifest -->
-  <link rel="manifest" href="manifest.json">
 
   <!-- Tile color for Win8 -->
   <meta name="msapplication-TileColor" content="#3372DF">
@@ -144,7 +145,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- Drawer Content -->
         <paper-menu class="list" attr-for-selected="data-route" selected="[[route]]">
           <a data-route="home" href="/" on-click="onDataRouteClick">
+            <!--
             <iron-icon icon="home"></iron-icon>
+            -->
+            <iron-icon src="images/water_icon_100.png"></iron-icon>
             <span>free water</span>
           </a>
         </paper-menu>
@@ -205,8 +209,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
-
   <!-- endbuild-->
+
 </body>
 
 </html>
