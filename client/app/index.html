@@ -146,7 +146,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <!-- Drawer Toolbar -->
         <paper-toolbar id="drawerToolbar">
-          <span class="paper-font-title">Menu</span>
+          <span class="paper-font-title">Ayuda</span>
         </paper-toolbar>
 
         <!-- Drawer Content -->
@@ -155,8 +155,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <!--
             <iron-icon icon="home"></iron-icon>
             -->
-            <iron-icon src="images/water_icon_100.png"></iron-icon>
-            <span>free water</span>
+            <a>
+              <iron-icon src="images/current_pos.png"></iron-icon>
+              <span>Current position</span>
+            </a>
+
+            <a>
+              <iron-icon src="images/water_icon_100.png"></iron-icon>
+              <span>Water point</span>
+            </a>
+
+            <a>
+              <iron-icon src="images/water_icon_50.png"></iron-icon>
+              <span>Less reliability water point</span>
+            </a>
+
+            <a>
+              <iron-icon src="images/water_icon_20.png"></iron-icon>
+              <span>Few reliability water point</span>
+            </a>
+
+            <a>
+              <iron-icon icon="maps:local-drink"></iron-icon>
+              <span>route to the closest point</span>
+            </a>
+
+            <a>
+              <iron-icon icon="editor:publish"></iron-icon>
+              <span>Publich current position as water point</span>
+            </a>
+
+            <a>
+              <iron-icon icon="icons:thumb-up"></iron-icon>
+              <span>Confirm water point</span>
+            </a>
+
+            <a>
+              <iron-icon icon="icons:thumb-down"></iron-icon>
+              <span>Deny water point</span>
+            </a>
+
+            <a>
+              <iron-icon icon="maps:directions-run"></iron-icon>
+              <span>Route from current position to water point</span>
+            </a>
           </a>
         </paper-menu>
       </paper-scroll-header-panel>
@@ -166,7 +208,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <!-- Main Toolbar -->
         <paper-toolbar id="mainToolbar" >
-          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+          <paper-icon-button id="paperToggle" icon="icons:help" paper-drawer-toggle></paper-icon-button>
           <span class="flex"></span>
 
           <!-- Toolbar icons -->
