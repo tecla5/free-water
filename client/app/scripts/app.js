@@ -51,6 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // the appName in the middle-container and the bottom title in the bottom-container.
   // The appName is moved to top and shrunk on condensing. The bottom sub title
   // is shrunk to nothing on condensing.
+  /*
   addEventListener('paper-header-transform', function(e) {
     var appName = document.querySelector('#mainToolbar .app-name');
     var middleContainer = document.querySelector('#mainToolbar .middle-container');
@@ -71,6 +72,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // Scale middleContainer appName
     Polymer.Base.transform('scale(' + scaleMiddle + ') translateZ(0)', appName);
   });
+  */
 
   // Close drawer after menu item is selected if drawerPanel is narrow
   app.onDataRouteClick = function() {
