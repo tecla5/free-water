@@ -30,10 +30,13 @@
     "polybuild": "^1.0.5",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.0.2",
-    "vulcanize": ">= 1.4.2",
+    "vulcanize": ">=1.4.2",
     "web-component-tester": "^3.1.3"
   },
   "scripts": {
+    "preinstall": "npm -version && bower -version",
+    "postinstall": "bower install",
+    "build": "gulp",
     "test": "gulp test:local",
     "start": "gulp serve"
   },
