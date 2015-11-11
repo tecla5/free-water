@@ -14,12 +14,65 @@
         display: block;
         height: 100%;
       }
+
+      paper-toolbar {
+        background: var(--google-green-700);
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        font-weight: bold;
+        z-index: 1;
+      }
+      paper-toolbar paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+      iron-list {
+        background-color: var(--paper-grey-200, #eee);
+        padding-top: 1px;
+        padding-bottom: 16px;
+        --iron-list-items-container: {
+          max-width: 800px;
+          margin: auto;
+          margin-top: 60px;
+          margin-bottom: 60px;
+          border-bottom: 1px solid #ddd;
+        };
+      }
+      .item {
+        @apply(--layout-horizontal);
+        padding: 20px;
+        background-color: white;
+        border: 1px solid #ddd;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+      .item:focus {
+        outline: 0;
+        border-color: #666;
+      }
+      .avatar {
+        height: 40px;
+        width: 40px;
+        border-radius: 20px;
+        box-sizing: border-box;
+        background-color: #DDD;
+      }
+      .pad {
+        padding: 0 16px;
+        @apply(--layout-flex);
+        @apply(--layout-vertical);
+      }
+      .primary {
+        font-size: 16px;
+        font-weight: bold;
+      }
+      .shortText, .longText {
+        font-size: 14px;
+      }
     </style>
 
     <google-map-search map="[[map]]" results="{{searchResults}}" type="address">
     </google-map-search>
 
-    <google-map map="{{map}}">
+    <google-map id="markMap" map="{{map}}">
       <template is="dom-if" if="{{closer}}">
         <paper-icon-button icon="maps:local-drink"
               alt="search closer"
@@ -79,6 +132,25 @@
               end-address="{{direction.end}}"
               travel-mode="WALKING">
     </google-map-directions>
+
+
+
+    <iron-list id="markList" items="[[sorted]]" as="item" >
+      <template>
+        <div >
+          <div tabindex="0">
+            <img class="avatar" src$="[[iconForItem(item)]]"><!-- [[item.image]] -->
+            <div class="pad">
+              <div class="primary"><p>{{item.name}}</p></div>
+              <div class="shortText"><p>{{item.formattedAddress}}</p></div>
+
+            </div>
+          </div>
+        </div>
+      </template>
+    </iron-list>
+
+
   </template>
 
   <script src="smart-map.js"></script>

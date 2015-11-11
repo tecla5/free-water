@@ -162,5 +162,22 @@ Polymer({
     var parent = target.parentElement.parentElement;
     var hiddenElement = parent.querySelector('input[type="hidden"]');
     return hiddenElement.value;
-  }
+  },
+
+  _collapseExpand: function(e) {
+     var list = this.$.list;
+     var index = e.model.index;
+     var isExpanded = list.items[index].expanded;
+     list.set('items.' + index + '.expanded', !isExpanded);
+     list.updateSizeForItem(e.model.index);
+   },
+   iconForItem: function(item) {
+     //item ? (item.integer < 50 ? 'star-border' : 'star') : '';
+     return getReliability(item);
+   },
+   getClassForItem: function(item, expanded) {
+     return expanded ? 'item expanded' : 'item';
+   }
+
+
 });

@@ -45,6 +45,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
     document.addEventListener('deviceready', app.onDeviceReady , false);
+    app.showMap();
+
   });
 
   // Main area's paper-scroll-header-panel custom condensing transformation of
@@ -86,5 +88,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.scrollPageToTop = function() {
     document.getElementById('mainContainer').scrollTop = 0;
   };
+
+  app.showMap = function() {
+    document.querySelector('#markMap').style.display = 'block'; //.hidden = false;
+    document.querySelector('#markList').style.display = 'none'; //.hidden = true;
+  };
+
+  app.showList = function() {
+    document.querySelector('#markList').style.display = 'block'; //.hidden = false;
+    document.querySelector('#markMap').style.display = 'none'; //.hidden = true;
+  };
+
+
 
 })(document);
