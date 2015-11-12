@@ -15,26 +15,40 @@ Polymer({
         self.user = authData;
     });
   },
-  login: function(){
-    this.$.loginDialog.open();
+  showLoginDialog: function(){
+    var self = this;
+
+    /*jshint camelcase: false */ /* option: add to .jshintrc file */
+    return new Promise(function(resolve, reject){
+      self.$.loginDialog.open();
+      self.promiseOpts = {
+        resolve:  resolve,
+        reject: reject
+      };
+    });
+  },
+  login: function(platform){
+    var self = this;
+    this.ref.authWithOAuthPopup(platform, function(error, authData) {
+      if (error) {
+        console.log('Login Failed!', error);
+        self.promiseOpts.reject(error);
+      } else {
+        console.log('Authenticated successfully with payload:', authData);
+        self.promiseOpts.resolve(authData);
+      }
+
+      self.closeLoginDialog();
+    });
   },
   googleLogin: function(){
-    this.ref.authWithOAuthPopup('google', function(error, authData) {
-      if (error) {
-        console.log('Login Failed!', error);
-      } else {
-        console.log('Authenticated successfully with payload:', authData);
-      }
-    });
+    this.login('google');
   },
   facebookLogin: function(){
-    this.ref.authWithOAuthPopup('facebook', function(error, authData) {
-      if (error) {
-        console.log('Login Failed!', error);
-      } else {
-        console.log('Authenticated successfully with payload:', authData);
-      }
-    });
+    this.login('facebook');
+  },
+  closeLoginDialog: function(){
+
   }
 
 });

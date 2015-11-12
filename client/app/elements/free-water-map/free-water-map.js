@@ -46,10 +46,22 @@ Polymer({
       var loginUser = firebaseLogin.user;
 
       if (!loginUser) {
-          firebaseLogin.login();
+        var self = this;
+
+        firebaseLogin.showLoginDialog().
+          then(function(){
+              self.publishByLoggedUser(data).bind(self);
+            },
+            function(){
+            console.error('login failed');
+            }
+          );
       }else{
-        this.marksdataSource.push(data.detail);
-        this.$$('smart-map').successRegisterMessage = 'Publish successfully';
+        this.publishByLoggedUser();
       }
+  },
+  publishByLoggedUser: function(data){
+    this.marksdataSource.push(data.detail);
+    this.$$('smart-map').successRegisterMessage = 'Publish successfully';
   }
 });

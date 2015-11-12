@@ -20,6 +20,7 @@
     "Platform": true,
     "page": true,
     "app": true,
-    "Firebase": true
+    "Firebase": true,
+    "Promise": true
   }
 }
