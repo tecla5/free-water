@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Building Free Water Project.";
-cd ./client/ && gulp && cd ../;
+cd ./client/ && npm run build && cd ../;
 
 echo "Deleting files in ./www";
 rm -rf ./www/*;
