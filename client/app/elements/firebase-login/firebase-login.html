@@ -2,12 +2,36 @@
 
 
 <dom-module id="firebase-login">
+<style include="shared-styles"></style>
+<style>
+  :host {
+    display: block;
+  }
+  paper-dialog{
+     margin: 0px !important;
+  }
+
+  paper-dialog.colored {
+    border: 2px solid;
+    border-color: var(--default-primary-color);
+    background-color: var(--primary-background-color);
+    color: var(--primary-text-color);
+  }
+
+</style>
 
   <template>
 
-    <paper-dialog id="loginDialog">
-      <paper-icon-button src="images/google.png" id="googleLogin"></paper-icon-button>
-      <paper-icon-button src="images/facebook.png" id="facebookLogin"></paper-icon-button>
+    <paper-dialog id="loginDialog" class="fit colored" modal>
+      <h2>Login</h2>
+      <div>with social account</div>
+      <div class="buttons">
+        <paper-icon-button dialog-confirm src="/images/google.png" id="googleLogin"></paper-icon-button>
+        <paper-icon-button dialog-confirm src="/images/facebook.png" id="facebookLogin"></paper-icon-button>
+      </div>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Decline</paper-button>
+      </div>
     </paper-dialog>
   </template>
 
