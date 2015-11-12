@@ -8,7 +8,7 @@ Polymer({
     'facebookLogin.tap': 'facebookLogin'
   },
   ready: function(){
-    this.ref = new Firebase("https://blinding-fire-1061.firebaseIO.com");
+    this.ref = new Firebase('https://blinding-fire-1061.firebaseIO.com');
     var self = this;
 
     this.ref.onAuth(function(authData){
@@ -19,20 +19,20 @@ Polymer({
     this.$.loginDialog.open();
   },
   googleLogin: function(){
-    this.ref.authWithOAuthPopup("google", function(error, authData) {
+    this.ref.authWithOAuthPopup('google', function(error, authData) {
       if (error) {
-        console.log("Login Failed!", error);
+        console.log('Login Failed!', error);
       } else {
-        console.log("Authenticated successfully with payload:", authData);
+        console.log('Authenticated successfully with payload:', authData);
       }
     });
   },
   facebookLogin: function(){
-    this.ref.authWithOAuthPopup("facebook", function(error, authData) {
+    this.ref.authWithOAuthPopup('facebook', function(error, authData) {
       if (error) {
-        console.log("Login Failed!", error);
+        console.log('Login Failed!', error);
       } else {
-        console.log("Authenticated successfully with payload:", authData);
+        console.log('Authenticated successfully with payload:', authData);
       }
     });
   }

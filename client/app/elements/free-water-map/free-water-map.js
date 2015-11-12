@@ -3,10 +3,9 @@ Polymer({
   ready: function(){
     console.log('free-water-map');
 
-    var smartMap = this.$$('smart-map');
     this.marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks');
 
-    this.loadMarks(smartMap, this.marksdataSource);
+    this.loadMarks();
 
     this.$$('smart-map').addEventListener('publish', this.publish.bind(this));
 
@@ -23,7 +22,9 @@ Polymer({
       marksdataSource.update({complaint: mark.complaint + 1});
     });
   },
-  loadMarks: function(smartMap, marksdataSource){
+  loadMarks: function(){
+    var self = this;
+
     this.marksdataSource.on('value', function(snapshot) {
 
       var marks = [];
@@ -35,7 +36,7 @@ Polymer({
           marks.push(obj[propt]);
       }
 
-      smartMap.marks = marks;
+      self.$$('smart-map').marks = marks;
     }, function (errorObject) {
       console.log('The read failed: ' + errorObject.code);
     });
@@ -48,7 +49,7 @@ Polymer({
           firebaseLogin.login();
       }else{
         this.marksdataSource.push(data.detail);
-        smartMap.successRegisterMessage = 'Publish successfully';
+        this.$$('smart-map').successRegisterMessage = 'Publish successfully';
       }
   }
 });
