@@ -12,13 +12,15 @@ Polymer({
     var self = this;
 
     this.ref.onAuth(function(authData){
-        self.user = authData;
+        self.setUserProperty(authData);
     });
+  },
+  attached: function(){
+    this.showUserLoggedInfo();
   },
   showLoginDialog: function(){
     var self = this;
 
-    /*jshint camelcase: false */ /* option: add to .jshintrc file */
     return new Promise(function(resolve, reject){
       self.$.loginDialog.open();
       self.promiseOpts = {
@@ -35,11 +37,37 @@ Polymer({
         self.promiseOpts.reject(error);
       } else {
         console.log('Authenticated successfully with payload:', authData);
-        self.promiseOpts.resolve(authData);
+        self.setUserProperty(authData);
+        self.promiseOpts.resolve(self.user);
       }
 
       self.closeLoginDialog();
     });
+  },
+  showUserLoggedInfo: function(){
+    var userNameComponent = document.querySelector('.user-name');
+
+    if (userNameComponent){
+      document.querySelector('.user-name').innerHTML = this.user.displayName;
+      document.querySelector('.user-picture').src = this.user.picture;
+    }
+  },
+  setUserProperty: function(authData){
+
+    if (authData){
+      this.user = {};
+
+      if (authData.google){
+        this.user.displayName = authData.google.displayName;
+        this.user.picture = authData.google.profileImageURL;
+      }else{
+         //user = authData.facebook;
+      }
+      console.log(JSON.stringify(authData));
+      this.showUserLoggedInfo();
+    }else{
+      this.user = authData;
+    }
   },
   googleLogin: function(){
     this.login('google');
@@ -48,7 +76,8 @@ Polymer({
     this.login('facebook');
   },
   closeLoginDialog: function(){
-
+    //TODO: add code to close login dialog
+    this.promiseOpts = {};
   }
 
 });

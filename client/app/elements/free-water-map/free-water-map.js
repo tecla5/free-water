@@ -49,15 +49,16 @@ Polymer({
         var self = this;
 
         firebaseLogin.showLoginDialog().
-          then(function(){
-              self.publishByLoggedUser(data).bind(self);
+          then(function(user){
+              console.log('User', user);
+              self.publishByLoggedUser(data, user);
             },
-            function(){
-            console.error('login failed');
+            function(error){
+              console.error('login failed', error);
             }
           );
       }else{
-        this.publishByLoggedUser();
+        this.publishByLoggedUser(data, loginUser);
       }
   },
   publishByLoggedUser: function(data){
