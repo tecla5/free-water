@@ -1,6 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-
 <dom-module id="free-water-map">
 
   <template>
@@ -17,63 +16,10 @@
 
     </style>
 
-    <!-- firebase -->
-    <!--<script src="../../../bower_components/firebase/firebase.js"></script>-->
-
-    <!--<firebase-collection
-      location="https://blinding-fire-1061.firebaseIO.com/marks"
-      data="{{marks}}"></firebase-collection>-->
-
+    <firebase-login></firebase-login>
     <smart-map></smart-map>
 
   </template>
 
-  <script>
-    Polymer({
-      is: 'free-water-map',
-      ready: function(){
-        console.log('free-water-map');
-
-        var smartMap = this.$$('smart-map');
-        var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks');
-
-        this.loadMarks(smartMap, marksdataSource);
-
-        this.$$('smart-map').addEventListener('publish', function (data) {
-            marksdataSource.push(data.detail);
-            smartMap.successRegisterMessage = 'Publish successfully';
-        });
-
-        this.$$('smart-map').addEventListener('confirm', function (data) {
-          var mark = data.detail.mark;
-          var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks/' + mark.__firebaseKey__);
-          marksdataSource.update({confirm: mark.confirm + 1});
-        });
-
-        this.$$('smart-map').addEventListener('complaint', function (data) {
-          var mark = data.detail.mark;
-
-          var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks/' + mark.__firebaseKey__);
-          marksdataSource.update({complaint: mark.complaint + 1});
-        });
-      },
-      loadMarks: function(smartMap, marksdataSource){
-        marksdataSource.on('value', function(snapshot) {
-
-          var marks = [];
-          var obj = snapshot.val();
-
-          for(var propt in obj){
-              var mark = obj[propt];
-              mark.__firebaseKey__ = propt;
-              marks.push(obj[propt]);
-          }
-
-          smartMap.marks = marks;
-        }, function (errorObject) {
-          console.log('The read failed: ' + errorObject.code);
-        });
-      }
-    });
-  </script>
+  <script src="free-water-map.js"></script>
 </dom-module>
