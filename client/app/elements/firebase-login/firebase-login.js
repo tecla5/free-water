@@ -47,7 +47,7 @@ Polymer({
   showUserLoggedInfo: function(){
     var userNameComponent = document.querySelector('.user-name');
 
-    if (userNameComponent){
+    if (userNameComponent && this.user){
       document.querySelector('.user-name').innerHTML = this.user.displayName;
       document.querySelector('.user-picture').src = this.user.picture;
     }
@@ -74,7 +74,7 @@ Polymer({
   },
   getUpdateUserFirebase : function(){
     var ref = new Firebase('https://blinding-fire-1061.firebaseio.com/users/' + this.user.id);
-    ref.set(this.user);    
+    ref.set(this.user);
   },
   googleLogin: function(){
     this.login('google');

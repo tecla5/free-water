@@ -1,7 +1,15 @@
 Polymer({
   is: 'free-water-map',
+  properties:{
+    usersReady: Boolean,
+    marks: Array
+  },
+  observers: [
+    'loadMarksToMap(marks, usersReady)'
+  ],
   ready: function(){
     console.log('free-water-map');
+    var self =  this;
 
     this.marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks');
 
@@ -17,6 +25,10 @@ Polymer({
       var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks/' + mark.__firebaseKey__);
       marksdataSource.update({complaint: mark.complaint + 1});
     });
+
+    this.$$('freewater-users').addEventListener('users-ready', function(){
+      self.usersReady = true;
+    });
   },
   confirm: function (data) {
     var mark = data.detail.mark;
@@ -29,26 +41,36 @@ Polymer({
     }
 
     confirms.push(this.user.id);
-    marksdataSource.update({confirms: confirms});
+    marksdataSource.update( { confirms: confirms } );
   },
   loadMarks: function(){
     var self = this;
 
     this.marksdataSource.on('value', function(snapshot) {
-
-      var marks = [];
-      var obj = snapshot.val();
-
-      for(var propt in obj){
-          var mark = obj[propt];
-          mark.__firebaseKey__ = propt;
-          marks.push(obj[propt]);
-      }
-
-      self.$$('smart-map').marks = marks;
+      self.marks = snapshot.val();
     }, function (errorObject) {
       console.log('The read failed: ' + errorObject.code);
     });
+  },
+  loadMarksToMap: function(){
+    var users = this.$$('freewater-users');
+    var marksWithUsers = [];
+
+    for(var propt in this.marks){
+        var mark = this.marks[propt];
+        mark.__firebaseKey__ = propt;
+
+        mark.createdDate = moment(mark.createdDate)
+          .format('MMMM Do YYYY, h:mm:ss a');
+          
+        console.log('mark.user', mark.user);
+        var user = users.getUser( mark.user );
+        mark.user = user;
+
+        marksWithUsers.push( this.marks[propt] );
+    }
+
+    this.$$('smart-map').marks = marksWithUsers;
   },
   publish: function (data) {
       var firebaseLogin  = this.$$('firebase-login');
