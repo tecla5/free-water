@@ -21,6 +21,7 @@
     "page": true,
     "app": true,
     "Firebase": true,
-    "Promise": true
+    "Promise": true,
+    "moment": true
   }
 }
