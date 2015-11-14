@@ -56,18 +56,25 @@ Polymer({
 
     if (authData){
       this.user = {};
-
+      console.log('authData', JSON.stringify(authData));
       if (authData.google){
         this.user.displayName = authData.google.displayName;
         this.user.picture = authData.google.profileImageURL;
+        this.user.id = authData.uid;
       }else{
          //user = authData.facebook;
       }
       console.log(JSON.stringify(authData));
+
+      this.getUpdateUserFirebase();
       this.showUserLoggedInfo();
     }else{
       this.user = authData;
     }
+  },
+  getUpdateUserFirebase : function(){
+    var ref = new Firebase('https://blinding-fire-1061.firebaseio.com/users/' + this.user.id);
+    ref.set(this.user);    
   },
   googleLogin: function(){
     this.login('google');
