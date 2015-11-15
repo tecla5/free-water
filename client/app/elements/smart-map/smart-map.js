@@ -17,7 +17,7 @@ function getDistance(pos1, pos2){
 }
 
 function getReliability(mark){
-  
+
   if ((mark.nConfirms + mark.nComplaints) === 0) {return '../../images/new_water_icon.png';}
 
   var reliability =  (mark.nConfirms * 100)/ (mark.nConfirms + mark.nComplaints);
@@ -27,7 +27,6 @@ function getReliability(mark){
   else if (reliability < 50 && reliability >= 30) {return '../../images/water_icon_50.png';}
   else {return '../../images/water_icon_20.png';}
 }
-
 
 Polymer({
   is: 'smart-map',
@@ -67,22 +66,14 @@ Polymer({
         var mark = this.marks[i];
 
         mark.distance = getDistance(this.pos, mark);
-
-        if (mark.confirms) {
-          mark.nConfirms = mark.confirms.length;
-        }else{
-           mark.nConfirms = 0;
-         }
-
-        if (mark.complaints){
-          mark.nComplaints = mark.complaints.length;
-        } else {
-          mark.nComplaints = 0;
-        }
+        mark.nConfirms = mark.confirms ? mark.confirms.length : 0;
+        mark.nComplaints = mark.complaints ? mark.complaints.length : 0;
+        mark.opinionButtonStyle = mark.gaveOpinion ? 'color:gray;' : 'color:blue;';
 
         mark.icon = getReliability(mark);
-        console.log('----------mark', mark);
         this.sorted.push(mark);
+
+        console.log('--------------mark', JSON.stringify(mark));
       }
 
       this.sorted.sort( function (a, b) { return a.distance - b.distance; });
