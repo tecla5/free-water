@@ -23,7 +23,7 @@
       <template is="dom-if" if="{{closer}}">
         <paper-icon-button icon="maps:local-drink"
               alt="search closer"
-              style="float:right">
+              style="float:right;color: blue;"
         </paper-icon-button >
       </template>
 
@@ -60,15 +60,38 @@
 
           <input type='hidden' value='{{index}}'></input>
 
-          <paper-icon-button icon="icons:thumb-up" alt="confirm">
+          <paper-icon-button icon="icons:thumb-up"
+            alt="confirm"
+            style="[[marker.opinionButtonStyle]]"
+            disabled = "[[marker.gaveOpinion]]">
           </paper-icon-button>
-          <label class="confirmLabel">[[marker.confirm]]</label>
+          <label class="confirmLabel">[[marker.nConfirms]]</label>
 
-          <paper-icon-button icon="icons:thumb-down"  alt="complaint"></paper-icon-button >
-          <label class="complaintLabel">[[marker.complaint]]</label>
+          <paper-icon-button icon="icons:thumb-down"
+          style="[[marker.opinionButtonStyle]]"
+            alt="complaint"
+            disabled = "[[marker.gaveOpinion]]">
+          </paper-icon-button >
 
-          <paper-icon-button icon="maps:directions-run"  alt="directions"></paper-icon-button >
+          <label class="complaintLabel">[[marker.nComplaints]]</label>
 
+          <paper-icon-button icon="maps:directions-run"  alt="directions" style="color: blue;">
+          </paper-icon-button >
+
+          <template is="dom-if" if="{{marker.gaveOpinion}}">
+            <p>You already gave your opinion about this point</p>
+          </template>
+          <hr>
+
+          <div>
+            <label><b>Created by:</b></label>
+            <label>[[marker.user.displayName]]</label>
+            <img src="[[marker.user.picture]]"/>
+          </div>
+
+          <div>
+            <label><b>Created at:</b></label>  <label>[[marker.createdDate]]</label>
+          </div>
         </google-map-marker>
       </template>
 

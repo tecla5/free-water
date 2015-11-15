@@ -17,16 +17,16 @@ function getDistance(pos1, pos2){
 }
 
 function getReliability(mark){
-  if ((mark.confirm + mark.complaint) === 0) {return '../../images/new_water_icon.png';}
 
-  var reliability =  (mark.confirm * 100)/ (mark.confirm + mark.complaint);
+  if ((mark.nConfirms + mark.nComplaints) === 0) {return '../../images/new_water_icon.png';}
+
+  var reliability =  (mark.nConfirms * 100)/ (mark.nConfirms + mark.nComplaints);
 
   if (reliability >= 75) {return '../../images/water_icon_100.png';}
   else if (reliability < 75 && reliability >= 50) {return 'images/water_icon_75.png';}
   else if (reliability < 50 && reliability >= 30) {return '../../images/water_icon_50.png';}
   else {return '../../images/water_icon_20.png';}
 }
-
 
 Polymer({
   is: 'smart-map',
@@ -66,9 +66,14 @@ Polymer({
         var mark = this.marks[i];
 
         mark.distance = getDistance(this.pos, mark);
-        mark.icon = getReliability(mark);
+        mark.nConfirms = mark.confirms ? mark.confirms.length : 0;
+        mark.nComplaints = mark.complaints ? mark.complaints.length : 0;
+        mark.opinionButtonStyle = mark.gaveOpinion ? 'color:gray;' : 'color:blue;';
 
+        mark.icon = getReliability(mark);
         this.sorted.push(mark);
+
+        console.log('--------------mark', JSON.stringify(mark));
       }
 
       this.sorted.sort( function (a, b) { return a.distance - b.distance; });
@@ -124,8 +129,9 @@ Polymer({
         lng: this.pos.lng,
         name: this.pos.name,
         formattedAddress: this.pos.formattedAddress,
-        confim: 0,
-        complaint: 0});
+        confirms: [],
+        complaints: [],
+        cretedDate: Firebase.ServerValue.TIMESTAMP});
     }else if (e.target.alt === 'confirm'){
       this.fire('confirm', { mark: this.marks[ this.getIndex(e.target) ] });
       this.addOpinion(e.target);

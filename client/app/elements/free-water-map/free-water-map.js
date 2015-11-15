@@ -1,67 +1,152 @@
+function changeToArray(obj){
+  var array = [];
+
+  if (obj){
+    for(var propt in obj){
+      array.push(obj[propt]);
+    }
+  }
+
+  return array;
+}
+
+function search(array, element){
+  for (var i = 0; i < array.length; i++){
+    if (array[i] === element){
+      return array[i];
+    }
+  }
+
+  return null;
+}
+
+function checkUserOpinion(mark, userId){
+  console.log('mark.confirms', mark.confirms);
+  console.log('mark.complaints', mark.complaints);
+  console.log('userId', userId);
+
+  var found = search(mark.confirms, userId);
+
+  if (!found){
+    found = search(mark.complaints, userId);
+  }
+
+  return found !== undefined;
+}
+
 Polymer({
   is: 'free-water-map',
+  properties:{
+    usersReady: Boolean,
+    marks: Array
+  },
+  observers: [
+    'loadMarksToMap(marks, usersReady)'
+  ],
   ready: function(){
     console.log('free-water-map');
+    var self =  this;
 
     this.marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks');
 
     this.loadMarks();
 
     this.$$('smart-map').addEventListener('publish', this.publish.bind(this));
-
-    this.$$('smart-map').addEventListener('confirm', function (data) {
-      var mark = data.detail.mark;
-      var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks/' + mark.__firebaseKey__);
-      marksdataSource.update({confirm: mark.confirm + 1});
+    this.$$('smart-map').addEventListener('confirm', function(data){
+      self.addOpinion('confirms', data);
     });
 
-    this.$$('smart-map').addEventListener('complaint', function (data) {
-      var mark = data.detail.mark;
-
-      var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks/' + mark.__firebaseKey__);
-      marksdataSource.update({complaint: mark.complaint + 1});
+    this.$$('smart-map').addEventListener('complaint', function(data){
+      self.addOpinion('complaints', data);
     });
+
+
+    this.$$('freewater-users').addEventListener('users-ready', function(){
+      self.usersReady = true;
+    });
+  },
+  addOpinion: function (typeOpinion, data) {
+    this.checkLogin().then(function(user){
+        var mark = data.detail.mark;
+        var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks/' +
+          mark.__firebaseKey__);
+        var array = marksdataSource.child(typeOpinion);
+
+        if (!array){
+          array = [];
+        }
+
+        array.push(user.id);
+        var objectToUpdate = {};
+        objectToUpdate[typeOpinion] = array;
+        marksdataSource.update( objectToUpdate );
+
+      });
   },
   loadMarks: function(){
     var self = this;
 
     this.marksdataSource.on('value', function(snapshot) {
-
-      var marks = [];
-      var obj = snapshot.val();
-
-      for(var propt in obj){
-          var mark = obj[propt];
-          mark.__firebaseKey__ = propt;
-          marks.push(obj[propt]);
-      }
-
-      self.$$('smart-map').marks = marks;
+      self.marks = snapshot.val();
     }, function (errorObject) {
       console.log('The read failed: ' + errorObject.code);
     });
   },
-  publish: function (data) {
-      var firebaseLogin  = this.$$('firebase-login');
-      var loginUser = firebaseLogin.user;
+  loadMarksToMap: function(){
+    var users = this.$$('freewater-users');
+    var marksWithUsers = [];
 
-      if (!loginUser) {
-        var self = this;
+    for(var propt in this.marks){
+        var mark = this.marks[propt];
+        mark.__firebaseKey__ = propt;
 
-        firebaseLogin.showLoginDialog().
-          then(function(user){
-              console.log('User', user);
-              self.publishByLoggedUser(data, user);
-            },
-            function(error){
-              console.error('login failed', error);
-            }
-          );
-      }else{
-        this.publishByLoggedUser(data, loginUser);
-      }
+        mark.createdDate = moment(mark.createdDate)
+          .format('MMMM Do YYYY, h:mm:ss a');
+        mark.confirms = changeToArray(mark.confirms);
+        mark.complaints = changeToArray(mark.complaints);
+
+        console.log('mark.user', mark.user);
+        var user = users.getUser( mark.user );
+        mark.user = user;
+
+        mark.gaveOpinion = checkUserOpinion(mark, user.id);
+
+        marksWithUsers.push( this.marks[propt] );
+
+    }
+
+    this.$$('smart-map').marks = marksWithUsers;
   },
-  publishByLoggedUser: function(data){
+  publish: function (data) {
+    var self = this;
+    this.checkLogin().then(function(user){
+        self.publishByLoggedUser(data, user);
+      });
+  },
+  checkLogin: function () {
+    var self = this;
+
+    return new Promise(function(resolve){
+        var firebaseLogin  = self.$$('firebase-login');
+        var loginUser = firebaseLogin.user;
+
+        if (!loginUser) {
+          firebaseLogin.showLoginDialog().
+            then(function(user){
+                console.log('User', user);
+                resolve(user);
+              },
+              function(error){
+                console.error('login failed', error);
+              }
+            );
+        }else{
+          resolve(loginUser);
+        }
+    });
+  },
+  publishByLoggedUser: function(data, user){
+    data.detail.user = user.id;
     this.marksdataSource.push(data.detail);
     this.$$('smart-map').successRegisterMessage = 'Publish successfully';
   }
