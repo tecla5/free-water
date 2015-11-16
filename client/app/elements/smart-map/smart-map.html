@@ -14,6 +14,11 @@
         display: block;
         height: 100%;
       }
+
+      iron-image.mini {
+        width:25px;
+        height: 25px;
+      }
     </style>
 
     <google-map-search map="[[map]]" results="{{searchResults}}" type="address">
@@ -86,7 +91,7 @@
           <div>
             <label><b>Created by:</b></label>
             <label>[[marker.user.displayName]]</label>
-            <img src="[[marker.user.picture]]"/>
+            <iron-image src="[[marker.user.picture]]" preload sizing="contain mini"></iron-image>
           </div>
 
           <div>
