@@ -87,4 +87,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     document.getElementById('mainContainer').scrollTop = 0;
   };
 
+  app.publish = function (){
+    var smartMap = document.querySelector('smart-map');
+    var currentPos = smartMap.pos;
+    console.log('currentPos', currentPos);
+    currentPos.cretedDate = Firebase.ServerValue.TIMESTAMP;
+
+    var freeWaterMap = document.querySelector('free-water-map');
+    freeWaterMap.publish(currentPos);
+  };
+
 })(document);

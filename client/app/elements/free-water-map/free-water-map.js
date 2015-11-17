@@ -146,8 +146,16 @@ Polymer({
     });
   },
   publishByLoggedUser: function(data, user){
-    data.detail.user = user.id;
-    this.marksdataSource.push(data.detail);
+    var mark;
+
+    if (data.detail){
+      mark = data.detail;
+    }else{
+      mark = data;
+    }
+
+    mark.user = user.id;
+    this.marksdataSource.push(mark);
     this.$$('smart-map').successRegisterMessage = 'Publish successfully';
   }
 });
