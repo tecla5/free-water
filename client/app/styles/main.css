@@ -20,3 +20,7 @@ body {
 .user-name{
   font-size: 12px;
 }
+.user-picture{
+  width: 25px;
+  height: 25px;
+}
