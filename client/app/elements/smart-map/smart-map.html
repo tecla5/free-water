@@ -32,19 +32,7 @@
         </paper-icon-button >
       </template>
 
-      <google-map-marker class='currentPos'>
-        <template is="dom-if" if="{{!veryCloser}}">
-          <div class="info">
-            <h2 id="currentPosName">{{pos.name}}</h2>
-            <span id="currentPosAddress">[[pos.formattedAddress]]</span>
-          </div>
-          <!--<paper-input label="Source water name" id="mark_name"></paper-input>-->
-
-          <!--<paper-icon-button icon="image:camera"></paper-icon-button>-->
-          <paper-icon-button  id="publishButton" icon="editor:publish" alt="Publish">
-          </paper-icon-button>
-        </template>
-
+      <google-map-marker class='currentPos' clickEvents="true">
         <template is="dom-if" if="{{veryCloser}}">
             This point is already marked
         </template>

@@ -109,6 +109,8 @@ Polymer({
     this.currentPosMarker.latitude = this.pos.lat;
     this.currentPosMarker.longitude = this.pos.lng;
 
+    this.currentPosMarker.addEventListener('google-map-marker-open', this.publish.bind(this));
+
     var googleSearch = this.$$('google-map-search');
     googleSearch.query = this.pos.lat + ',' + this.pos.lng;
     googleSearch.search();
@@ -122,17 +124,7 @@ Polymer({
     this.loadCurrentPos();
   },
   tap: function(e){
-
-    if (e && e.target.alt === 'Publish'){
-
-      this.fire('publish', {lat: this.pos.lat,
-        lng: this.pos.lng,
-        name: this.pos.name,
-        formattedAddress: this.pos.formattedAddress,
-        confirms: [],
-        complaints: [],
-        cretedDate: Firebase.ServerValue.TIMESTAMP});
-    }else if (e.target.alt === 'confirm'){
+    if (e.target.alt === 'confirm'){
       this.fire('confirm', { mark: this.marks[ this.getIndex(e.target) ] });
       this.addOpinion(e.target);
     }else if (e.target.alt === 'complaint'){
@@ -144,6 +136,20 @@ Polymer({
       this.markDirectionTo(this.sorted[ 0 ]);
     }else{
       this.$$('google-map-directions').directionsRenderer.setMap(null);
+    }
+  },
+  publish: function(){
+    console.log('this.veryCloser', this.veryCloser);
+    if (!this.veryCloser){
+      this.fire('publish', {lat: this.pos.lat,
+        lng: this.pos.lng,
+        name: this.pos.name,
+        formattedAddress: this.pos.formattedAddress,
+        confirms: [],
+        complaints: [],
+        cretedDate: Firebase.ServerValue.TIMESTAMP});
+
+        this.veryCloser = true;
     }
   },
   markDirectionTo: function(mark){
