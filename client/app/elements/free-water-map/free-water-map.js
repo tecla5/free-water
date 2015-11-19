@@ -104,6 +104,9 @@ Polymer({
     this.$$('smart-map').style.height = '500px';
   },
   loadMarksToMap: function(){
+    var firebaseLogin  = this.$$('firebase-login');
+    var loginUser = firebaseLogin.user;
+
     var users = this.$$('freewater-users');
     var marksWithUsers = [];
 
@@ -120,7 +123,10 @@ Polymer({
         var user = users.getUser( mark.user );
         mark.user = user;
 
-        mark.gaveOpinion = !userDontHaveOpinion(mark, user.id);
+        if (loginUser){
+          mark.gaveOpinion = !userDontHaveOpinion(mark, loginUser.id);
+        }
+
         console.log('mark.gaveOpinion', mark.gaveOpinion);
         marksWithUsers.push( this.marks[propt] );
 
