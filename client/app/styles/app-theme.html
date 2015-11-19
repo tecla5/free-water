@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   #drawerToolbar {
     color: var(--secondary-text-color);
     background-color: var(--drawer-menu-color);
-    border-bottom: var(--drawer-toolbar-border-color);
+    /*border-bottom: var(--drawer-toolbar-border-color);*/
   }
 
   paper-scroll-header-panel {
@@ -87,14 +87,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     -ms-flex-align: center;
     -webkit-align-items: center;
     align-items: center;
-    font-family: 'Roboto', 'Noto', sans-serif;
+    font-family: 'OpenSans-Regular';
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 12px;
+    font-weight: 500;
     line-height: 24px;
     min-height: 48px;
     padding: 0 16px;
+    border-top: 1px solid #77BCEA;
   }
 
   paper-toolbar.tall .app-name {
@@ -105,13 +106,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     transform-origin: left center;
   }
 
+  paper-toolbar.paper-toolbar-0{
+    background: -webkit-linear-gradient(90deg, #003E76, #00A0E3); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(90deg, #003E76, #00A0E3); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(90deg, #003E76, #00A0E3); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(90deg, #003E76, #00A0E3); /* Standard syntax */
+  }
+
   #mainToolbar .middle-container  {
     height: 100%;
     margin-left: 48px;
   }
 
   #mainToolbar:not(.tall) .middle {
-    font-size: 18px;
+    font-family: 'OpenSans-ExtraBold';
+    font-size: 32px;
     padding-bottom: 0;
   }
 
@@ -124,7 +133,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   /* Height of the scroll area */
   .content {
-    height: 900px;
+    height: 750px;
+    background-image   : url(../images/water.png);
+    background-color: white;
+    background-repeat  : no-repeat;
+    background-position: bottom;
   }
 
   /* Breakpoints */
@@ -146,6 +159,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     #drawer .paper-toolbar {
       margin-left: 16px;
+      background-color: var(--drawer-menu-color);
     }
 
     #overlay {
@@ -169,7 +183,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     #drawer.paper-drawer-panel > [drawer] {
-      border-right: 1px solid rgba(0, 0, 0, 0.14);
+      border-right: 1px solid #E3E3E3;
     }
 
     iron-pages {

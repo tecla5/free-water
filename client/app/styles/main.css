@@ -6,17 +6,32 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+@font-face {
+  font-family: 'OpenSans-Regular';
+  src: url(fonts/OpenSans-Regular.ttf);
+}
+@font-face {
+  font-family: 'OpenSans-Light';
+  src: url(fonts/OpenSans-Light.ttf);
+}
+@font-face {
+  font-family: 'OpenSans-ExtraBold';
+  src: url(fonts/OpenSans-ExtraBold.ttf);
+}
+
 
 body {
-  background: #fafafa;
-  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: white;
+  font-family: 'OpenSans-Regular';
   color: #333;
 }
 
-.list span{
+/*.list span{
   font-size: 10px;
+}*/
+.logo{
+  margin-left: 30px;
 }
-
 .user-name{
   font-size: 12px;
 }
