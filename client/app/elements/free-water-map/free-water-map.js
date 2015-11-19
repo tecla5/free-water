@@ -89,9 +89,19 @@ Polymer({
 
     this.marksdataSource.on('value', function(snapshot) {
       self.marks = snapshot.val();
+
+      if (self.$$('.progress-panel').style.display === 'block'){
+        self.hideProgressbar();
+      }
+
     }, function (errorObject) {
       console.log('The read failed: ' + errorObject.code);
     });
+  },
+  hideProgressbar: function(){
+    this.$$('.progress-panel').style.display = 'none';
+    this.$$('.progress-panel').style.height = '500px';
+    this.$$('smart-map').style.height = '500px';
   },
   loadMarksToMap: function(){
     var users = this.$$('freewater-users');
