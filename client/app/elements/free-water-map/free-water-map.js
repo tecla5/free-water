@@ -20,7 +20,7 @@ function search(array, element){
   return null;
 }
 
-function checkUserOpinion(mark, userId){
+function  userDontHaveOpinion(mark, userId){
   console.log('mark.confirms', mark.confirms);
   console.log('mark.complaints', mark.complaints);
   console.log('userId', userId);
@@ -31,7 +31,8 @@ function checkUserOpinion(mark, userId){
     found = search(mark.complaints, userId);
   }
 
-  return found !== undefined;
+  console.log('found', found);
+  return !found;
 }
 
 Polymer({
@@ -109,8 +110,8 @@ Polymer({
         var user = users.getUser( mark.user );
         mark.user = user;
 
-        mark.gaveOpinion = checkUserOpinion(mark, user.id);
-
+        mark.gaveOpinion = !userDontHaveOpinion(mark, user.id);
+        console.log('mark.gaveOpinion', mark.gaveOpinion);
         marksWithUsers.push( this.marks[propt] );
 
     }

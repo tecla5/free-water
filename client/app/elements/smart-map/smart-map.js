@@ -69,11 +69,9 @@ Polymer({
         mark.nConfirms = mark.confirms ? mark.confirms.length : 0;
         mark.nComplaints = mark.complaints ? mark.complaints.length : 0;
         mark.opinionButtonStyle = mark.gaveOpinion ? 'color:gray;' : 'color:blue;';
-
+        console.log('mark.opinionButtonStyle', mark.opinionButtonStyle);
         mark.icon = getReliability(mark);
         this.sorted.push(mark);
-
-        console.log('--------------mark', JSON.stringify(mark));
       }
 
       this.sorted.sort( function (a, b) { return a.distance - b.distance; });
