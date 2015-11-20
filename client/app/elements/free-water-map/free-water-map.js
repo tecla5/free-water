@@ -68,19 +68,21 @@ Polymer({
   addOpinion: function (typeOpinion, data) {
     this.checkLogin().then(function(user){
         var mark = data.detail.mark;
-        var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks/' +
-          mark.__firebaseKey__);
-        var array = marksdataSource.child(typeOpinion);
 
-        if (!array){
-          array = [];
+        if (userDontHaveOpinion( mark, user.id)){
+          var marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks/' +
+            mark.__firebaseKey__);
+          var array = marksdataSource.child(typeOpinion);
+
+          if (!array){
+            array = [];
+          }
+
+          array.push(user.id);
+          var objectToUpdate = {};
+          objectToUpdate[typeOpinion] = array;
+          marksdataSource.update( objectToUpdate );
         }
-
-        array.push(user.id);
-        var objectToUpdate = {};
-        objectToUpdate[typeOpinion] = array;
-        marksdataSource.update( objectToUpdate );
-
       });
   },
   loadMarks: function(customEvent){
