@@ -50,8 +50,7 @@ Polymer({
 
     this.marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks');
 
-    this.loadMarks();
-
+    this.$$('smart-map').addEventListener('country-changed', this.loadMarks.bind(this));
     this.$$('smart-map').addEventListener('publish', this.publish.bind(this));
     this.$$('smart-map').addEventListener('confirm', function(data){
       self.addOpinion('confirms', data);
@@ -84,19 +83,22 @@ Polymer({
 
       });
   },
-  loadMarks: function(){
+  loadMarks: function(customEvent){
+
+    var country = customEvent.detail.country;
+    console.log('country', country);
     var self = this;
 
-    this.marksdataSource.on('value', function(snapshot) {
+    this.marksdataSource.orderByChild('country').equalTo(country).on('value', function(snapshot) {
       self.marks = snapshot.val();
 
-      if (self.$$('.progress-panel').style.display === 'block'){
-        self.hideProgressbar();
-      }
+        if (self.$$('.progress-panel').style.display === 'block'){
+          self.hideProgressbar();
+        }
 
-    }, function (errorObject) {
-      console.log('The read failed: ' + errorObject.code);
-    });
+      }, function (errorObject) {
+        console.log('The read failed: ' + errorObject.code);
+      });
   },
   hideProgressbar: function(){
     this.$$('.progress-panel').style.display = 'none';
@@ -119,7 +121,6 @@ Polymer({
         mark.confirms = changeToArray(mark.confirms);
         mark.complaints = changeToArray(mark.complaints);
 
-        console.log('mark.user', mark.user);
         var user = users.getUser( mark.user );
         mark.user = user;
 
@@ -164,6 +165,7 @@ Polymer({
   },
   publishByLoggedUser: function(data, user){
     var mark;
+    console.log('data.detail', data.detail);
 
     if (data.detail){
       mark = data.detail;

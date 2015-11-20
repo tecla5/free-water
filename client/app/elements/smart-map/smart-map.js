@@ -1,3 +1,8 @@
+function getCountry(formattedAddress){
+  var splits = formattedAddress.split(' ');
+  return splits[ splits.length - 1 ];
+}
+
 function getDistance(pos1, pos2){
     var R = 6372.795477598;
     var C = Math.PI/180;
@@ -53,17 +58,24 @@ Polymer({
       this.pos.name = searchResults[0].name;
       /*jshint camelcase: false */ /* option: add to .jshintrc file */
       this.pos.formattedAddress = searchResults[0].formatted_address;
+
+      var oldCountry = this.pos.country;
+      this.pos.country = getCountry(this.pos.formattedAddress);
+
+      if (this.pos.country !== oldCountry){
+        this.fire('country-changed', {country: this.pos.country});
+      }
     }
   },
   changeMark: function(marks, pos){
     this.marks = marks;
     this.pos =pos;
 
-    if (this.marks && this.marks.length > 0 && this.pos){
+    if (marks && marks.length > 0 && this.pos){
       this.sorted = [];
 
-      for (var i = 0; i < this.marks.length; i++){
-        var mark = this.marks[i];
+      for (var i = 0; i < marks.length; i++){
+        var mark = marks[i];
 
         mark.distance = getDistance(this.pos, mark);
         mark.nConfirms = mark.confirms ? mark.confirms.length : 0;
@@ -78,6 +90,7 @@ Polymer({
 
       this.closer = this.sorted[0].distance < 20;
       this.veryCloser = this.sorted[0].distance < 0.5;
+
     }
   },
   loadCurrentPos: function(){
@@ -145,7 +158,8 @@ Polymer({
         formattedAddress: this.pos.formattedAddress,
         confirms: [],
         complaints: [],
-        cretedDate: Firebase.ServerValue.TIMESTAMP});
+        cretedDate: Firebase.ServerValue.TIMESTAMP,
+        country: this.pos.country});
 
         this.veryCloser = true;
     }
