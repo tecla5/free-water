@@ -137,10 +137,8 @@ Polymer({
   tap: function(e){
     if (e.target.alt === 'confirm'){
       this.fire('confirm', { mark: this.marks[ this.getIndex(e.target) ] });
-      this.addOpinion(e.target);
     }else if (e.target.alt === 'complaint'){
       this.fire('complaint', { mark: this.marks[ this.getIndex(e.target) ] });
-      this.addOpinion(e.target);
     }else if(e.target.alt === 'directions'){
       this.markDirectionTo(this.marks[ this.getIndex(e.target) ]);
     }else if (e.target.alt === 'search closer'){
@@ -173,11 +171,6 @@ Polymer({
 
     this.direction = {start: start, end: end};
     console.log('this.direction', JSON.stringify(this.direction));
-  },
-  addOpinion: function(target){
-    var parent = target.parentElement.parentElement;
-    var label = parent.querySelector('.' + target.alt + 'Label');
-    label.textContent = parseInt(label.textContent) + 1;
   },
   getIndex: function(target){
     var parent = target.parentElement.parentElement;
