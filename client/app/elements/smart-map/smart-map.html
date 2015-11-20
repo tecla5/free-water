@@ -10,8 +10,6 @@
       }
 
       google-map {
-        position: inherit;
-        display: block;
         height: 100%;
       }
 
@@ -61,7 +59,7 @@
           <label class="confirmLabel">[[marker.nConfirms]]</label>
 
           <paper-icon-button icon="icons:thumb-down"
-          style="[[marker.opinionButtonStyle]]"
+            style="[[marker.opinionButtonStyle]]"
             alt="complaint"
             disabled = "[[marker.gaveOpinion]]">
           </paper-icon-button >
@@ -78,7 +76,7 @@
 
           <div>
             <label><b>Created by:</b></label>
-            <label>[[marker.user.displayName]]</label>
+            <label>{{marker.user.displayName}}</label>
             <iron-image src="[[marker.user.picture]]" preload sizing="contain mini"></iron-image>
           </div>
 

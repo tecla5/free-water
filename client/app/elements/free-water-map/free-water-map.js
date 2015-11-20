@@ -20,7 +20,7 @@ function search(array, element){
   return null;
 }
 
-function checkUserOpinion(mark, userId){
+function  userDontHaveOpinion(mark, userId){
   console.log('mark.confirms', mark.confirms);
   console.log('mark.complaints', mark.complaints);
   console.log('userId', userId);
@@ -31,7 +31,8 @@ function checkUserOpinion(mark, userId){
     found = search(mark.complaints, userId);
   }
 
-  return found !== undefined;
+  console.log('found', found);
+  return !found;
 }
 
 Polymer({
@@ -49,8 +50,7 @@ Polymer({
 
     this.marksdataSource = new Firebase('https://blinding-fire-1061.firebaseIO.com/marks');
 
-    this.loadMarks();
-
+    this.$$('smart-map').addEventListener('country-changed', this.loadMarks.bind(this));
     this.$$('smart-map').addEventListener('publish', this.publish.bind(this));
     this.$$('smart-map').addEventListener('confirm', function(data){
       self.addOpinion('confirms', data);
@@ -83,16 +83,32 @@ Polymer({
 
       });
   },
-  loadMarks: function(){
+  loadMarks: function(customEvent){
+
+    var country = customEvent.detail.country;
+    console.log('country', country);
     var self = this;
 
-    this.marksdataSource.on('value', function(snapshot) {
+    this.marksdataSource.orderByChild('country').equalTo(country).on('value', function(snapshot) {
       self.marks = snapshot.val();
-    }, function (errorObject) {
-      console.log('The read failed: ' + errorObject.code);
-    });
+
+        if (self.$$('.progress-panel').style.display === 'block'){
+          self.hideProgressbar();
+        }
+
+      }, function (errorObject) {
+        console.log('The read failed: ' + errorObject.code);
+      });
+  },
+  hideProgressbar: function(){
+    this.$$('.progress-panel').style.display = 'none';
+    this.$$('.progress-panel').style.height = '500px';
+    this.$$('smart-map').style.height = '500px';
   },
   loadMarksToMap: function(){
+    var firebaseLogin  = this.$$('firebase-login');
+    var loginUser = firebaseLogin.user;
+
     var users = this.$$('freewater-users');
     var marksWithUsers = [];
 
@@ -105,12 +121,14 @@ Polymer({
         mark.confirms = changeToArray(mark.confirms);
         mark.complaints = changeToArray(mark.complaints);
 
-        console.log('mark.user', mark.user);
         var user = users.getUser( mark.user );
         mark.user = user;
 
-        mark.gaveOpinion = checkUserOpinion(mark, user.id);
+        if (loginUser){
+          mark.gaveOpinion = !userDontHaveOpinion(mark, loginUser.id);
+        }
 
+        console.log('mark.gaveOpinion', mark.gaveOpinion);
         marksWithUsers.push( this.marks[propt] );
 
     }
@@ -147,6 +165,7 @@ Polymer({
   },
   publishByLoggedUser: function(data, user){
     var mark;
+    console.log('data.detail', data.detail);
 
     if (data.detail){
       mark = data.detail;
