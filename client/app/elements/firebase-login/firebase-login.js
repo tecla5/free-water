@@ -63,7 +63,10 @@ Polymer({
         this.user.picture = authData.google.profileImageURL;
         this.user.id = authData.uid;
       }else{
-         //user = authData.facebook;
+         this.user.displayName = authData.facebook.displayName;
+         this.user.picture = authData.facebook.profileImageURL;
+         this.user.id = authData.uid;
+         
       }
       console.log(JSON.stringify(authData));
 
