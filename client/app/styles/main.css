@@ -24,3 +24,10 @@ body {
   width: 25px;
   height: 25px;
 }
+
+.close_dialog_button{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 10px;
+}

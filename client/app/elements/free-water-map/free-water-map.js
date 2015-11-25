@@ -66,7 +66,9 @@ Polymer({
     });
   },
   addOpinion: function (typeOpinion, data) {
-    this.checkLogin().then(function(user){
+    var message = 'Yo have to login to confirm or deny a water point';
+
+    this.checkLogin(message).then(function(user){
         var mark = data.detail.mark;
 
         if (userDontHaveOpinion(mark, user.id)){
@@ -139,15 +141,18 @@ Polymer({
   },
   publish: function (data) {
     var self = this;
-    this.checkLogin().then(function(user){
+    var message = 'Yo have to login to publish a water point';
+
+    this.checkLogin(message).then(function(user){
         self.publishByLoggedUser(data, user);
       });
   },
-  checkLogin: function () {
+  checkLogin: function (message) {
     var self = this;
 
     return new Promise(function(resolve){
         var firebaseLogin  = self.$$('firebase-login');
+        firebaseLogin.message = message;
         var loginUser = firebaseLogin.user;
 
         if (!loginUser) {
