@@ -1,7 +1,8 @@
 Polymer({
   is: 'firebase-login',
   properties:{
-    user: Object
+    user: Object,
+    message: String
   },
   listeners: {
     'googleLogin.tap': 'googleLogin',
