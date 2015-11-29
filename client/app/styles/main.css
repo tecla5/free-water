@@ -30,7 +30,7 @@ body {
   font-size: 10px;
 }*/
 .logo{
-  margin: 100px 0px 0px -15px;
+  margin: 150px 0px 0px 40px;
 }
 .user-name{
   font-size: 12px;
@@ -38,4 +38,10 @@ body {
 .user-picture{
   width: 25px;
   height: 25px;
+}
+h1{
+  color: white;
+}
+#mainToolbar span h1{
+  margin: 130px 0px 0px 0px;
 }
