@@ -31,3 +31,46 @@ body {
   top: 10px;
   font-size: 10px;
 }
+
+@font-face {
+    font-family: 'help_font';
+    src: url('fonts/sunshine.ttf');
+}
+
+.paper-font-title{
+  color: #0c7cc9;
+  font-family: 'help_font';
+}
+
+#helpPanel, #drawerToolbar, #helpContent{
+  background-color: #cdf0f6;
+}
+
+#free_water{
+  width: 20%;
+}
+
+#free_water_help{
+  width: 40%;
+}
+
+#drawerToolbar div{
+  display: block;
+}
+
+#mainToolbar{
+  background: linear-gradient(left, #b6e5f0, #52cbdb);
+}
+
+free-water-map{
+  height:100%;
+}
+
+.help_icon{
+  float:right;
+  margin-top: 15px;
+}
+
+.user-panel{
+  margin: auto;
+}

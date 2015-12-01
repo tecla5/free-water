@@ -103,11 +103,11 @@ Polymer({
       }, function (errorObject) {
         console.log('The read failed: ' + errorObject.code);
       });
+
+      this.$$('.map-panel').style.height = '100%';
   },
   hideProgressbar: function(){
     this.$$('.progress-panel').style.display = 'none';
-    this.$$('.progress-panel').style.height = '500px';
-    this.$$('smart-map').style.height = '500px';
   },
   loadMarksToMap: function(){
     var firebaseLogin  = this.$$('firebase-login');
